@@ -40,7 +40,7 @@ The code in this project is a isolated and very simplified version of our FHIR u
 - Below a sample screen is attached.
 -- Every Component should be separated and communicate each other.
 -- Any state is change to one component then it should reflect to other.
-
+![Alt text](assignment.PNG?raw=true "Assignment Wireframe")
 Feel free to ask questions anytime.
 
 
