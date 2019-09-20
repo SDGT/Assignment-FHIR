@@ -1,0 +1,84 @@
+<mat-card *ngIf="'Add' == data['requestAction'] || 'Edit' == data['requestAction']">
+  <mat-card-title>{{ data['requestAction']}} Consent</mat-card-title>
+  <form [formGroup]="consentForm" (ngSubmit)="submitConsentForm(consentForm.value)">
+    <input type="hidden" formControlName="consent_id">
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Name" formControlName="consent_name" required>
+      <mat-error
+        *ngIf="consentForm.controls['consent_name'].hasError('required') && consentForm.controls['consent_name'].touched">
+        Consent Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Policy" formControlName="consent_policy" required>
+      <mat-error
+        *ngIf="consentForm.controls['consent_policy'].hasError('required') && consentForm.controls['consent_policy'].touched">
+        Policy Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="clsFormDropdwon">
+      <mat-select class="clsSelect" placeholder="Type" formControlName="consent_type">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="consentForm.controls['consent_type'].hasError('required') && consentForm.controls['consent_type'].touched">
+        Consent Type is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="clsFormDropdwon">
+      <mat-select class="clsSelect" placeholder="Unit" formControlName="consent_unit">
+        <mat-option *ngFor="let unit of units" [value]="unit.value">
+          {{unit.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="consentForm.controls['consent_unit'].hasError('required') && consentForm.controls['consent_unit'].touched">
+        Consent Unit is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Address" formControlName="patient_address" required>
+      <mat-error
+        *ngIf="consentForm.controls['patient_address'].hasError('required') && consentForm.controls['patient_address'].touched">
+        Patient Address is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Age" formControlName="patient_age" required>
+      <mat-error
+        *ngIf="consentForm.controls['patient_age'].hasError('required') && consentForm.controls['patient_age'].touched">
+        Patient Age is required</mat-error>
+      <mat-error
+        *ngIf="consentForm.controls['patient_age'].errors?.minlength && consentForm.controls['patient_age'].touched">
+        Enter valid age.</mat-error>
+      <mat-error
+        *ngIf="consentForm.controls['patient_age'].errors?.maxlength && consentForm.controls['patient_age'].touched">
+        Enter valid age.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Patient Name" formControlName="patient_name" required>
+      <mat-error
+        *ngIf="consentForm.controls['patient_name'].hasError('required') && consentForm.controls['patient_name'].touched">
+        Patient Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-card-actions class="clsCustomZeroMargin">
+      <button mat-raised-button type="submit" class="btn pr-1" color="primary">Submit</button>
+      <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+<mat-card *ngIf="'info' == data['requestAction']">
+  <form [formGroup]="patientForm">
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Name" formControlName="patient_name" readonly>
+    </mat-form-field>
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Address" formControlName="patient_address" readonly>
+    </mat-form-field>
+    <mat-form-field class="clsFormField">
+      <input matInput placeholder="Age" formControlName="patient_age" readonly>
+    </mat-form-field>
+    <mat-card-actions class="clsCustomZeroMargin">
+      <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -1,0 +1,124 @@
+<mat-drawer-container class="example-container">
+
+  <mat-drawer mode="side" opened class="sidenav"><br><br>
+    <mat-label class="sidebar">Logo</mat-label><br><br>
+    <mat-form-field class="clsDropdown">
+      <mat-label>Consent Type</mat-label>
+      <mat-select class="clsSelect" (selectionChange)="onTypeChange($event.value)">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <mat-toolbar>
+      <mat-toolbar-row class="toolbar">
+        <span class="example-spacer">Component Header</span>
+        <span class="example-icon">
+          <mat-form-field>
+            <mat-label>Unit</mat-label>
+            <mat-select class="clsSelect" (selectionChange)="onUnitChange($event.value)">
+              <mat-option *ngFor="let unit of units" [value]="unit.value">
+                {{unit.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-card class="clsCard">
+      <mat-card-header class="header">
+        <button mat-raised-button color="primary" (click)="open('Add','')">Add New Consent</button>
+      </mat-card-header>
+      <br><br>
+      <mat-card-content><br>
+        <hr><br>
+        <mat-form-field class="clsSearch">
+          <input matInput placeholder="Search" (keyup)='updateFilter($event.target.value)'>
+        </mat-form-field>
+        <button class="clsRefresh" mat-icon-button (click)="refreshList()">
+          <mat-icon title="Connected">refresh</mat-icon>
+        </button>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort matSortActive="consent_id" matSortDirection="asc">
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="1" (change)="radioChange(row)"></mat-radio-button>
+                </mat-radio-group>
+              </td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="consent_id">
+              <th mat-header-cell *matHeaderCellDef> Consent No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.consent_id}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="consent_name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.consent_name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="consent_policy">
+              <th mat-header-cell *matHeaderCellDef> Policy </th>
+              <td mat-cell *matCellDef="let element"> {{element.consent_policy}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="consent_type">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let element"> {{element.consent_type}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="consent_unit">
+              <th mat-header-cell *matHeaderCellDef> Unit </th>
+              <td mat-cell *matCellDef="let element"> {{element.consent_unit}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="patient_name">
+              <th mat-header-cell *matHeaderCellDef> Patient Info </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="open('info',row)">
+                  <mat-icon class="mat-20">info</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button title="" (click)="open('Edit',row)">
+                  <mat-icon class="mat-20">edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button title="" (click)="delete(row)">
+                  <mat-icon class="mat-20">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </mat-drawer-content>
+</mat-drawer-container>
